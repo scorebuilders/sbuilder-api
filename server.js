@@ -67,14 +67,11 @@ app.post('/api/score', function(req, res) {
   // sessionId:scope:timestamp
   _.each(req.body.scopes, function(scope, key) {
     scoreKey = sessionId + ":" + key + ":" + Date.now();
-    console.log(scoreKey);
-    client.set(scoreKey, scope, function(err, resp) {
-      console.log('set resp', err, resp);
-    });
+    client.set(scoreKey, scope);
   });
 
   res.send({
-    message: "score received"
+    message: "👍"
   })
 });
 
