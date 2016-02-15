@@ -76,7 +76,9 @@ app.post('/api/score', function(req, res) {
 app.get('/api/report/:id', function(req, res) {
   var sessionId = req.params.id;
   client.get(sessionId, function(err, sessionObj) {
-    res.json(sessionObj);
+    if(!err) {
+      res.json(sessionObj);
+    }
   });
 });
 
