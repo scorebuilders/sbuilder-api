@@ -1,0 +1,25 @@
+{
+  "name": "sbuilder-api",
+  "version": "1.0.0",
+  "description": "This API is a meat popsicle.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scorebuilders/sbuilder-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scorebuilders/sbuilder-api/issues"
+  },
+  "homepage": "https://github.com/scorebuilders/sbuilder-api#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "raven": "^0.10.0",
+    "redis": "^2.4.2"
+  }
+}
