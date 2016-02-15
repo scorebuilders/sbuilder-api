@@ -14,9 +14,9 @@
 
 |endpoint|request type|response|description|
 |---|---|---|---|
-|/api/session/new|GET|`{}`|TBD|
-|/api/score|POST|`{}`|TBD|
-|/api/report/:sessionId|GET|`{}`|TBD|
+|/api/session/new|GET|`{ sessionId: [sessionId]}`|TBD|
+|/api/score|POST|`{"message":"👍"}`|TBD|
+|/api/report/[sessionId]|GET|`{[like, everything + stats of submitted data]}`|TBD|
 
 ## Redis bootstrap commands:
 
