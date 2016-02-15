@@ -4,21 +4,22 @@
 
 * `brew install redis`
 * `npm install`
-
+* run "Redis bootstrap" commands in redis-cli below
 
 ## API
 
 * start redis with `redis-server`
- * if you're running for the first time, also run `./redis-bootstrap.sh`
  * check that redis is running with `redis-cli ping`
 * to run, `node server.js`, then visit http://localhost:3000
 
 |endpoint|request type|response|description|
 |---|---|---|---|
 |/api/session/new|GET|`{}`|TBD|
-|/api/session/new|GET|`{}`|TBD|
-|/api/session/new|GET|`{}`|TBD|
+|/api/score|POST|`{}`|TBD|
+|/api/report/:sessionId|GET|`{}`|TBD|
 
 ## Redis bootstrap commands:
+
+To run these commands, fire up the redis command line client by running `redis-cli`, then type each of these:
 
 * `set urlIndex 1`
