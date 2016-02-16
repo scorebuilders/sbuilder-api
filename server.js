@@ -67,7 +67,10 @@ app.post('/api/score', function(req, res) {
   // sessionId:scope:timestamp
   _.each(req.body.scopes, function(scope, key) {
     scoreKey = sessionId + ":" + key + ":" + Date.now();
-    client.set(scoreKey, scope);
+    // this feels lame, but I'm packing these records with easy-to-access data
+    scope.sessionId = sessionId;
+    scope.scope = key;
+    client.set(scoreKey, JSON.stringify(scope));
   });
 
   res.send({
@@ -77,10 +80,42 @@ app.post('/api/score', function(req, res) {
 
 app.get('/api/report/:id', function(req, res) {
   var sessionId = req.params.id;
+
+  // this is a little grody, too
+  var response = {
+      sessionId: sessionId,
+      scopes: {
+        individual: {
+          scores: []
+        },
+        team: {
+          scores: []
+        },
+        company: {
+          scores: []
+        }
+      }
+  };
+
   client.keys(sessionId + ":*", function(err, keys) {
-    // if(!err) {
-    //   res.json(sessionObj);
-    // }
+    client.mget(keys, function(err, records) {
+      _.each(records, function(record) {
+        record = JSON.parse(record);
+        response.scopes[record.scope].scores.push(record);
+      });
+
+      // we could accumulate #'s for a sum up there ^
+      _.each(response.scopes, function(scope, key) {
+        var avg = _.map(scope.scores, function(s) {
+            return s.score;
+        });
+        var raw_avg = _.sum(avg) / scope.scores.length;
+        var avg = Math.round(raw_avg * 100)/100;
+        response.scopes[key].average = avg;
+      });
+
+      res.json(response);
+    });
   });
 });
 
