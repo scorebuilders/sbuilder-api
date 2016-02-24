@@ -104,18 +104,15 @@ app.get('/api/report/:id', function(req, res) {
     client.mget(keys, function(err, records) {
       _.each(records, function(record) {
         record = JSON.parse(record);
-        console.log(record);
         response.scopes[record.scope].scores.push(record);
       });
 
-      // we could accumulate #'s for a sum up there ^
       _.each(response.scopes, function(scope, key) {
-        var avg = _.map(scope.scores, function(s) {
-            return s.score;
+        var sum = _.reduce(scope.scores, function(a, b) {
+          return parseFloat(a.score) + parseFloat(b.score);
         });
-        var raw_avg = _.sum(avg) / scope.scores.length;
-        var avg = Math.round(raw_avg * 100)/100;
-        response.scopes[key].average = avg;
+        var avg = sum / scope.scores.length;
+        response.scopes[key].average = Math.round(avg * 100) / 100;
       });
 
       res.json(response);
