@@ -82,10 +82,13 @@ app.get('/api/report/:id', function(req, res) {
   var sessionId = req.params.id;
 
   // this is a little grody, too
+  // NOTE: DB dependency here btwn
+  // scope names & stored records.
+  // BAD THING. - pk
   var response = {
       sessionId: sessionId,
       scopes: {
-        individual: {
+        own: {
           scores: []
         },
         team: {
@@ -101,6 +104,7 @@ app.get('/api/report/:id', function(req, res) {
     client.mget(keys, function(err, records) {
       _.each(records, function(record) {
         record = JSON.parse(record);
+        console.log(record);
         response.scopes[record.scope].scores.push(record);
       });
 
