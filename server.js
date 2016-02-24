@@ -109,8 +109,8 @@ app.get('/api/report/:id', function(req, res) {
 
       _.each(response.scopes, function(scope, key) {
         var sum = _.reduce(scope.scores, function(a, b) {
-          return parseFloat(a.score) + parseFloat(b.score);
-        });
+          return a + parseFloat(b.score);
+        }, 0.0);
         var avg = sum / scope.scores.length;
         response.scopes[key].average = Math.round(avg * 100) / 100;
       });
